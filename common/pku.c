@@ -3,6 +3,9 @@
 #ifndef SYSCLK
 #define SYSCLK 22118400
 #endif
+#ifndef BAUDRATE
+#define BAUDRATE 115200
+#endif
 /* simple for loop delay */
 void Delay(int k)
 {
@@ -61,4 +64,18 @@ void ADC0_Init (int mux)
     EIE2 &= ~0x02;       // disable ADC0 interrupts
     AD0EN = 1;           // enable ADC0
 
+}
+
+void UART0_Init ()
+{
+    SCON0 = 0x50;
+    TMOD = 0x20;       // timer1 as baudrate generator
+#ifdef USE_CKCON
+    CKCON |= 0x10;      // timer1 use sysclk
+    TH1 = -(SYSCLK/BAUDRATE/16);
+#else
+    TH1 = -(SYSCLK/BAUDRATE/16/12);
+#endif
+    TR1 = 1;            // start timer1
+    PCON |= 0x80;       // SMOD0 = 1
 }

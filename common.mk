@@ -1,10 +1,10 @@
-PKULIB=../common/pku.rel
+PKULIB=pku.rel
 
 $(PROG).ihx: $(PROG).c $(PKULIB)
 	sdcc --nogcse -I../common $(PROG).c $(PKULIB)
 
 $(PKULIB): ../common/pku.c ../common/pku.h
-	( cd ../common && make ) 
+	sdcc --nogcse -c ../common/pku.c $(DEFINES)
 
 program: $(PROG).ihx
 	sudo /home/yangyj/bin/ec2writeflash --port USB --mode JTAG --hex $(PROG).ihx --eraseall --run
