@@ -9,13 +9,6 @@ void PORT_Init()
     P0MDOUT |= 0x01; // set tx0 as push-pull
 }
 
-void putchar(char c)
-{
-    SBUF0 = c;
-    while(!TI0);
-    TI0 = 0;
-}
-
 void main()
 {
     WDTCN=0XDE;

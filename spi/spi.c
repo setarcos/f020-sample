@@ -43,14 +43,6 @@ void Timer0_us (unsigned us)
     }
 }
 
-
-void putchar(char c)
-{
-    SBUF0 = c;
-    while(!TI0);
-    TI0 = 0;
-}
-
 void main()
 {
     unsigned char v1;

@@ -73,3 +73,11 @@ void UART0_Init ()
     TR1 = 1;            // start timer1
     PCON |= 0x80;       // SMOD0 = 1
 }
+
+void putchar(char c)
+{
+    SBUF0 = c;
+    while(!TI0);
+    TI0 = 0;
+}
+
