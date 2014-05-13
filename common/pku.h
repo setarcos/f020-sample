@@ -1,5 +1,13 @@
 #ifndef __PKU_H__
 #define __PKU_H__
+
+#ifndef SYSCLK
+#define SYSCLK 22118400
+#endif
+#ifndef BAUDRATE
+#define BAUDRATE 115200
+#endif
+
 void Delay(int k);
 void SYSCLK_Init();
 void EMIF_Low(void);

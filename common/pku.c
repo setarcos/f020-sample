@@ -1,11 +1,5 @@
 #include "pku.h"
 #include <C8051F020.h>
-#ifndef SYSCLK
-#define SYSCLK 22118400
-#endif
-#ifndef BAUDRATE
-#define BAUDRATE 115200
-#endif
 /* simple for loop delay */
 void Delay(int k)
 {
