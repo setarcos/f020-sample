@@ -1,0 +1,4 @@
+#DEFINES=-DSYSCLK=4000000L -DUSE_CKCON
+PROG=i2c
+include ../common.mk
+
