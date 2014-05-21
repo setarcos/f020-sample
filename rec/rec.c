@@ -1,7 +1,6 @@
 #include <C8051F020.h>
-
 #define SYSCLK 22118400
-#define RATE    8000
+#define RATE    8192
 #define COUNT   0x7000
 #define UPSMP 4
 #define THRESH 0x2000
@@ -9,7 +8,7 @@
 
 __xdata __at (0x8000) unsigned char seg;
 __xdata __at (0x8001) unsigned char cs;
-volatile __xdata __at (0x0000) unsigned char mm[0x8000];
+__xdata __at (0x0000) unsigned char mm[0x8000];
 
 __code const unsigned char segs[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
     0x80, 0x90, 0x88, 0x83, 0xC6, 0xA1, 0x86, 0x8E};
@@ -20,30 +19,13 @@ volatile __bit adc1_done;
 
 void ADC0_ISR (void) __interrupt (15)
 {
-    static unsigned tmp[UPSMP];
-    static count = 0;
     AD0INT = 0;
     if (adc1_done == 0) {
         unsigned k;
-        tmp[count++] = ADC0;
-        if (count == UPSMP) {
-            int i, j;
-            count = 0;
-            k = 0;
-            j = 0;
-            for (i = 0; i < UPSMP; ++i) {
-                if ((tmp[i] < 0xE000) && (tmp[i] > 0x2000)) {
-                    k += tmp[i] >> 3;
-                    j++;
-                }
-            }
-            if (j == 0) k = tmp[0];
-            else k /= j;
-            k <<= 3;
-            mm[samples] = k & 0xff;
-            mm[samples + 1] = (k >> 8);
-            samples += 2;
-        }
+        k = ADC0;
+        mm[samples] = k & 0xff;
+        mm[samples + 1] = (k >> 8);
+        samples += 2;
         if (samples >= COUNT) {
             adc1_done = 1;
             samples = 0;
@@ -76,7 +58,9 @@ void main(void)
     WDTCN = 0xde;
     WDTCN = 0xad; // Disable watchdog
     EMIF_Low();
-    Timer3_Init(SYSCLK/RATE/UPSMP);
+    XBR0 = 0x04;     // uart0 enabled in xbr
+    P0MDOUT |= 0x01; // set tx0 as push-pull
+    Timer3_Init(SYSCLK/RATE);
     Timer4_Init(SYSCLK/RATE);
     ADC0_Init(1);
     DAC1CN = 0x17; // update on timer4 overflow, left justify
