@@ -16,7 +16,7 @@ void main (void) {
    WDTCN = 0xad;
    EMIF_Low();
    REF0CN = 0x03;                   // enable internal VREF generator
-   DAC0CN = 0x84;                   // enable DAC0 in left-justified mode
+   DAC0CN = 0x97;                   // enable DAC0 in left-justified mode
                                     // using Timer4 as update scheduler
    Timer4_Init(SYSCLK/SAMPLERATED); // initialize T4 to generate DAC0
                                     // schedule
