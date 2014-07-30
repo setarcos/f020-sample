@@ -28,6 +28,8 @@ void main(void)
         Delay(1000);          // debounce
         i = ~P4 & 0x0F;
         if (i == 0) continue; // no key;
+        if (key != (dec[i] << 2)) // got different value from two probes.
+            continue;
         P4 = 0xF0;
         Delay(100);
         i = ~P4;
