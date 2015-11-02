@@ -1,4 +1,4 @@
-#include <c8051f020.h>              // SFR declarations
+#include <C8051F020.h>              // SFR declarations
 #define SYSCLK 22118400             // SYSCLK frequency in Hz
 #define SAMPLERATED 8000         // update rate of DAC in Hz
 #include "pku.h"

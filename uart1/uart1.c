@@ -1,4 +1,4 @@
-#include <c8051f020.h>
+#include <C8051F020.h>
 
 #define SYSCLK 22118400
 #include "pku.h"

@@ -3,7 +3,7 @@
  *
  * This sample demonstrates the use of DS1307 on SMB interface
  */
-#include <c8051f020.h>
+#include <C8051F020.h>
 #include <stdio.h>
 #include "pku.h"
 #define I2CCLK 80000 // 100k

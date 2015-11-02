@@ -1,4 +1,4 @@
-#include <c8051f020.h>
+#include <C8051F020.h>
 #include <stdio.h>
 #include "pku.h"
 #define SPICLK 2000000
