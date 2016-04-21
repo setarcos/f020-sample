@@ -45,7 +45,7 @@ void wr_dat(unsigned char d)
     P2 = 0x10;
 } */
 
-void lcd_init(void)
+void lcd_init9481(void)
 {
     reset = 1;
     Delay(200);
@@ -113,6 +113,77 @@ void lcd_init(void)
 
     Delay(3000);
     cmd = 0x29;  // Set display on
+}
+
+void lcd_init9486(void) /* ZHA */
+{
+    reset = 1;
+    Delay(200);
+    cmd = 0xF2;
+    data = 0x18;
+    data = 0xA3;
+    data = 0x12;
+    data = 0x02;
+    data = 0xB2;
+    data = 0x12;
+    data = 0xFF;
+    data = 0x10;
+    data = 0x00;
+    cmd = 0xF8;
+    data = 0x21;
+    data = 0x04;
+    cmd = 0xF9;
+    data = 0x00;
+    data = 0x08;
+    cmd = 0x36;
+    data = 0x08;
+    cmd = 0x3A;
+    data = 0x05;
+    cmd = 0xB4;
+    data = 0x01;//0x00
+    cmd = 0xB6;
+    data = 0x02;
+    data = 0x22;
+    cmd = 0xC1;
+    data = 0x41;
+    cmd = 0xC5;
+    data = 0x00;
+    data = 0x07;//0x18
+    cmd = 0xE0;
+    data = 0x0F;
+    data = 0x1F;
+    data = 0x1C;
+    data = 0x0C;
+    data = 0x0F;
+    data = 0x08;
+    data = 0x48;
+    data = 0x98;
+    data = 0x37;
+    data = 0x0A;
+    data = 0x13;
+    data = 0x04;
+    data = 0x11;
+    data = 0x0D;
+    data = 0x00;
+    cmd = 0xE1;
+    data = 0x0F;
+    data = 0x32;
+    data = 0x2E;
+    data = 0x0B;
+    data = 0x0D;
+    data = 0x05;
+    data = 0x47;
+    data = 0x75;
+    data = 0x37;
+    data = 0x06;
+    data = 0x10;
+    data = 0x03;
+    data = 0x24;
+    data = 0x20;
+    data = 0x00;
+    cmd = 0x11;
+    Delay(200);
+    cmd = 0x29;
 }
 
 /*
@@ -241,7 +312,7 @@ void main(void)
     lcd_reset(); */
     EMIF_Low();
     EMI0TC = 0x41;
-    lcd_init();
+    lcd_init9486();
     dis_color(0xFF00);
     show_char(160, 240, 0x00FF, 'F');
     show_char(168, 240, 0x00FF, '/');
