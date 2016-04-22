@@ -2,6 +2,7 @@
 
 #define SYSCLK 22118400
 #include "pku.h"
+#define SAMPLERATE 10000
 
 __xdata __at (0x8000) unsigned char seg;
 __xdata __at (0x8001) unsigned char cs;
@@ -14,8 +15,13 @@ volatile unsigned samples;
 
 void ADC0_ISR (void) __interrupt (15)
 {
+    static unsigned int count;
+    count++;
     AD0INT = 0;
-    samples = ADC0;
+    if (count >= SAMPLERATE / 2) {
+        samples = ADC0;
+        count = 0;
+    }
 }
 
 void main(void)
@@ -23,7 +29,7 @@ void main(void)
     WDTCN = 0xde;
     WDTCN = 0xad; // Disable watchdog
     EMIF_Low();
-    Timer3_Init(SYSCLK/50000);
+    Timer3_Init(SYSCLK/SAMPLERATE);
     ADC0_Init(0);
     EA = 1;
     EIE2 |= 0x02; // enabled adc interrupt
