@@ -39,9 +39,6 @@ unsigned char smb_buf[20];             // SMB transmit/receive buffer
 unsigned char smb_len;                 // transfer length
 volatile int result;
 
-sbit SCL = P0 ^ 3;
-sbit SDA = P0 ^ 2;
-
 void SYSCLK_Init()
 {
     int i;
@@ -70,24 +67,6 @@ void Delay(int k)
     int i;
     for (i = 0; i < k; ++i);
 }
-
-void Timer0_ms (int ms)
-{
-    int i;
-    TCON &= ~0x30;
-    TMOD &= ~0x0f;
-    TMOD |= 0x01;
-    CKCON |= 0x08;
-    for (i = 0; i < ms; ++i) {
-        TR0 = 0;
-        TH0 = (-SYSCLK/1000) >> 8;
-        TL0 = -SYSCLK/1000;
-        TR0 = 1;
-        while (TF0 == 0);
-        TF0 = 0;
-    }
-}
-
 
 void PORT_Init()
 {
