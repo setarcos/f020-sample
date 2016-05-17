@@ -1,7 +1,7 @@
 PKULIB=pku.rel
 
-$(PROG).ihx: $(PROG).c $(PKULIB)
-	sdcc --nogcse -I../common $(PROG).c $(PKULIB)
+$(PROG).ihx: $(PROG).c $(PKULIB) $(OTHERS)
+	sdcc --nogcse $(DEFINES) -I../common $(PROG).c $(PKULIB) $(OTHERS)
 
 $(PKULIB): ../common/pku.c ../common/pku.h
 	sdcc --nogcse -c ../common/pku.c $(DEFINES)

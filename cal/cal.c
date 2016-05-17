@@ -102,7 +102,7 @@ void calculate(uchar buf[])
 {
     uchar p; // 字符索引
     uchar c;
-    int a, b, r;
+    long a, b, r;
     p = 0;
     while (buf[p] == ' ') p++; // 去掉空格
     a = 0;
@@ -132,7 +132,8 @@ void calculate(uchar buf[])
                   break;
         case '*': r = a * b;
                   break;
-        case '/': r = a / b;
+        case '/': if (b == 0) r = 0;
+                  else r = a / b;
                   break;
         default:
                   r = 0;
